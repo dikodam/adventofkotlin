@@ -3,12 +3,13 @@ package de.dikodam.adventofkotlin
 import kotlin.math.min
 
 fun main(args: Array<String>) {
-    AbstractDay.doTheMagicWithKotlin(Day02())
+    AbstractDay.doTheMagic(Day02())
 }
 
 class Day02 : AbstractDay() {
     override fun task1() {
-        val sum = input.map(::parseDimensions)
+        val sum = input
+            .map(::parseDimensions)
             .map(::computeArea)
             .sum()
         println("T1: area sum is $sum")
@@ -29,7 +30,8 @@ class Day02 : AbstractDay() {
     }
 
     override fun task2() {
-        val ribbonLength = input.map(::parseDimensions)
+        val ribbonLength = input
+            .map(::parseDimensions)
             .map(::computeRibbonLength)
             .sum()
 

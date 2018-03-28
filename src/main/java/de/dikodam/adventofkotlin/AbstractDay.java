@@ -40,7 +40,7 @@ public abstract class AbstractDay {
         }
     }
 
-    public static <D extends AbstractDay> void doTheMagicWithKotlin(D day) {
+    public static <D extends AbstractDay> void doTheMagic(D day) {
         day.task1();
         day.task2();
     }
