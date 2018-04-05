@@ -36,8 +36,8 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>kotlin-maven-plugin</artifactId>
                     <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${kotlin.version}</version>
                     <configuration>
                         <jvmTarget>${kotlin.compiler.jvmTarget}</jvmTarget>
