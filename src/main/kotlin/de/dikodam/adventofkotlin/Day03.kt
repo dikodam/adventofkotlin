@@ -38,8 +38,8 @@ class Day03 : AbstractDay() {
         val positionCount = Stream.concat(santaPositions, roboPositions)
             .distinct()
             .count()
-        println("T2: count visited positions: $positionCount")
 
+        println("T2: count visited positions: $positionCount")
     }
 
     private fun buildVisitedPositionsStream(movements: List<Pair<Int, Int>>,
