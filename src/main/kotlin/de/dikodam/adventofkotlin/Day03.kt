@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 class Day03 : AbstractDay() {
 
     override fun task1() {
-        val movements = input[0].split("")
+        val movements = loadInput()[0].split("")
             .map(::parseDirectionSignToMovement)
         val movementsIterator = movements.iterator()
         val positionCount = Stream.iterate(Pair(0, 0), { it + movementsIterator.next() })
@@ -31,7 +31,7 @@ class Day03 : AbstractDay() {
     }
 
     override fun task2() {
-        val movements = input[0].split("")
+        val movements = loadInput()[0].split("")
             .map(::parseDirectionSignToMovement)
         val santaPositions = buildVisitedPositionsStream(movements, indexFilter = { it % 2 == 0 })
         val roboPositions = buildVisitedPositionsStream(movements, indexFilter = { it % 2 != 0 })

@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
 
 class Day01 : AbstractDay() {
     override fun task1() {
-        val sum = input[0].split("")
+        val sum = loadInput()[0].split("")
             .asSequence()
             .map(::charToInt)
             .sum()
@@ -22,7 +22,7 @@ class Day01 : AbstractDay() {
     }
 
     override fun task2() {
-        val ints = input[0].split("")
+        val ints = loadInput()[0].split("")
             .map(::charToInt)
 
         var sum = 0

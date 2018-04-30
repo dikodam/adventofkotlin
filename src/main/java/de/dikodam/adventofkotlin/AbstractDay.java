@@ -15,7 +15,7 @@ public abstract class AbstractDay {
 
     public abstract void task2();
 
-    public List<String> getInput(String fileName) {
+    public List<String> loadInput(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(
             new File(getClass().getResource("/" + fileName).toURI())))) {
             return br.lines().collect(toList());
@@ -24,10 +24,10 @@ public abstract class AbstractDay {
         }
     }
 
-    public List<String> getInput() {
+    public List<String> loadInput() {
         String className = getClass().getSimpleName();
         System.out.println("fetching input for class " + className);
-        return getInput(className);
+        return loadInput(className);
     }
 
     protected static <T extends AbstractDay> void doTheMagic(Class<T> clazz) {

@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
 
 class Day02 : AbstractDay() {
     override fun task1() {
-        val sum = input
+        val sum = loadInput()
             .map(::parseDimensions)
             .map(::computeArea)
             .sum()
@@ -30,7 +30,7 @@ class Day02 : AbstractDay() {
     }
 
     override fun task2() {
-        val ribbonLength = input
+        val ribbonLength = loadInput()
             .map(::parseDimensions)
             .map(::computeRibbonLength)
             .sum()
