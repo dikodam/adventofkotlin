@@ -20,6 +20,7 @@ class Day04 : AbstractDay() {
 
     private fun findFirstHashWithDifficulty(difficulty: Int, seedString: String, consumeOnSuccess: (Pair<Int, String>) -> Unit) {
         IntStream.iterate(1, { i -> i + 1 })
+            .parallel() // TODO no idea if this really adds efficiency...
             .mapToObj { Pair(it, "$seedString$it") }
             .map { pair -> Pair(pair.first, computeMD5Hash(pair.second)) }
             .filter { (_, hash) -> hasLeadingZeroes(difficulty)(hash) }
