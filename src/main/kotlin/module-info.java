@@ -1,5 +1,4 @@
 module adventofkotlin {
     requires kotlin.stdlib;
-    requires io.reactivex.rxjava2;
-
+    exports de.dikodam.adventofkotlin;
 }
