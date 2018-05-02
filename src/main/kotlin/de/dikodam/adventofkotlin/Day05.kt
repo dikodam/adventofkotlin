@@ -19,27 +19,33 @@ class Day05 : AbstractDay() {
         println("task 1: There are $count nice strings")
     }
 
-    private fun contains3OrMoreVowels(text: String): Boolean {
-        return (0 until text.length)
-            .map { text[it] }
+    private fun contains3OrMoreVowels(line: String): Boolean {
+        return (0 until line.length)
+            .map { line[it] }
             .filter { vowels.contains(it) }
             .count() >= 3
     }
 
-    private fun containsNoForbiddenString(text: String): Boolean =
-        forbiddenStrings.none { text.contains(it) }
+    private fun containsNoForbiddenString(line: String): Boolean =
+        forbiddenStrings.none { line.contains(it) }
 
-    private fun containsDuplicate(text: String): Boolean =
-        (1 until text.length).any { index -> text[index - 1] == text[index] }
+    private fun containsDuplicate(line: String): Boolean =
+        (1 until line.length).any { index -> line[index - 1] == line[index] }
 
 
     override fun task2() {
+        val count = loadInput()
+            .filter { containsDuplicatePair(it) }
+            .filter { containsDuplicateWith1CharInBetween(it) }
+            .count()
+        println("task 2: $count nice strings found")
     }
 
-    /*
-    listOf("ugknbfddgicrmopn", "jchzalrnumimnmhp", "haegwjzuvuyypxyu", "dvszwmarrgswjxmb")
-    .filter(this::contains3OrMoreVowels)
-    .filter(this::containsDuplicate)
-    .filter(this::containsNoForbiddenString)
-*/
+    private fun containsDuplicatePair(line: String): Boolean {
+        return true
+    }
+
+    private fun containsDuplicateWith1CharInBetween(line: String): Boolean =
+        (2 until line.length).any { index -> line[index - 2] == line[index] }
+
 }
