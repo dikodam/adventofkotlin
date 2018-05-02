@@ -35,14 +35,26 @@ class Day05 : AbstractDay() {
 
     override fun task2() {
         val count = loadInput()
-            .filter { containsDuplicatePair(it) }
             .filter { containsDuplicateWith1CharInBetween(it) }
+            .filter { containsDuplicatePair(it) }
             .count()
         println("task 2: $count nice strings found")
     }
 
     private fun containsDuplicatePair(line: String): Boolean {
-        return true
+        if (line.length <= 4) {
+            return false
+        }
+        val pairs = (0 until (line.length - 1))
+            .map { index -> line.substring(index, index + 2) }
+            .toList()
+        for (i in 0..pairs.size) {
+            for (j in (i + 2)..pairs.size) {
+                if (j >= pairs.size) continue
+                if (pairs[i] == pairs[j]) return true
+            }
+        }
+        return false
     }
 
     private fun containsDuplicateWith1CharInBetween(line: String): Boolean =
