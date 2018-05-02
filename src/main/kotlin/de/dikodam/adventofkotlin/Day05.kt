@@ -6,8 +6,8 @@ fun main(args: Array<String>) {
 
 class Day05 : AbstractDay() {
 
-    val vowels = listOf('a', 'e', 'i', 'o', 'u')
-    val forbiddenStrings = listOf("ab", "cd", "pq", "xy")
+    private val vowels = listOf('a', 'e', 'i', 'o', 'u')
+    private val forbiddenStrings = listOf("ab", "cd", "pq", "xy")
 
     override fun task1() {
         val count = loadInput()
@@ -19,18 +19,17 @@ class Day05 : AbstractDay() {
         println("task 1: There are $count nice strings")
     }
 
-    fun contains3OrMoreVowels(text: String): Boolean {
+    private fun contains3OrMoreVowels(text: String): Boolean {
         return (0 until text.length)
             .map { text[it] }
-            .distinct()
-            .filter { vowels.contains(it.toChar()) }
+            .filter { vowels.contains(it) }
             .count() >= 3
     }
 
-    fun containsNoForbiddenString(text: String): Boolean =
+    private fun containsNoForbiddenString(text: String): Boolean =
         forbiddenStrings.none { text.contains(it) }
 
-    fun containsDuplicate(text: String): Boolean =
+    private fun containsDuplicate(text: String): Boolean =
         (1 until text.length).any { index -> text[index - 1] == text[index] }
 
 
