@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
 
 
 typealias Command = (Lightbulb) -> Unit
-typealias Instruction = Triple<Command, Coordinates, Coordinates>
+typealias InstructionDay06 = Triple<Command, Coordinates, Coordinates>
 
 class Day06 : AbstractDay() {
 
@@ -32,7 +32,7 @@ class Day06 : AbstractDay() {
         println("task 1: $count bulbs are turned on after all instructions completed")
     }
 
-    fun List<Instruction>.applyTo(lightbulbs: List<List<Lightbulb>>) {
+    fun List<InstructionDay06>.applyTo(lightbulbs: List<List<Lightbulb>>) {
         this
             .forEach { (command, coordsFrom, coordsTo) ->
                 (coordsFrom..coordsTo)
@@ -47,7 +47,7 @@ class Day06 : AbstractDay() {
             .split(" through ")
             .map { parseCoordinates(it) }
             .toList()
-        return Instruction(command, coordinates[0], coordinates[1])
+        return InstructionDay06(command, coordinates[0], coordinates[1])
     }
 
     private fun parseCommand(instructionLine: String): Command {
