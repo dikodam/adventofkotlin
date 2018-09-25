@@ -3,7 +3,7 @@ package de.dikodam.adventofkotlin
 import kotlin.math.min
 
 fun main(args: Array<String>) {
-    AbstractDay.doTheMagic(Day02())
+    Day02().runTasks()
 }
 
 class Day02 : AbstractDay() {

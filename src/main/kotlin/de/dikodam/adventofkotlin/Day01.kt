@@ -1,10 +1,11 @@
 package de.dikodam.adventofkotlin
 
 fun main(args: Array<String>) {
-    AbstractDay.doTheMagic(Day01())
+    Day01().runTasks()
 }
 
 class Day01 : AbstractDay() {
+    private val input = loadInput()
     override fun task1() {
         val sum = loadInput()[0].split("")
             .asSequence()

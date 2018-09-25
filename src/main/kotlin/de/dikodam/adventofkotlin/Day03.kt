@@ -3,7 +3,7 @@ package de.dikodam.adventofkotlin
 import java.util.stream.Stream
 
 fun main(args: Array<String>) {
-    AbstractDay.doTheMagic(Day03())
+    Day03().runTasks()
 }
 
 class Day03 : AbstractDay() {

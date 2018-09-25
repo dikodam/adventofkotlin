@@ -14,12 +14,15 @@ class Day04 : AbstractDay() {
         // append decimal number
         // compute MD5 hash
         // find first number where the (hexadecimal) MD5 hash starts with 5 zeros
-        val input = loadInput()[0]!!
-        findFirstHashWithDifficulty(5, input, { pair: Pair<Int, String> -> println("T1: The number to append is: ${pair.first}") })
+        val input = loadInput()[0]
+        findFirstHashWithDifficulty(5, input)
+        { pair: Pair<Int, String> -> println("T1: The number to append is: ${pair.first}") }
     }
 
-    private fun findFirstHashWithDifficulty(difficulty: Int, seedString: String, consumeOnSuccess: (Pair<Int, String>) -> Unit) {
-        IntStream.iterate(1, { i -> i + 1 })
+    private fun findFirstHashWithDifficulty(difficulty: Int,
+                                            seedString: String,
+                                            consumeOnSuccess: (Pair<Int, String>) -> Unit) {
+        IntStream.iterate(1) { i -> i + 1 }
             .parallel() // TODO no idea if this really adds efficiency...
             .mapToObj { Pair(it, "$seedString$it") }
             .map { pair -> Pair(pair.first, computeMD5Hash(pair.second)) }
@@ -35,7 +38,8 @@ class Day04 : AbstractDay() {
 
     override fun task2() {
         val input = loadInput()[0]
-        findFirstHashWithDifficulty(6, input, { pair: Pair<Int, String> -> println("T2: The number to append is: ${pair.first}") })
+        findFirstHashWithDifficulty(6, input)
+        { pair: Pair<Int, String> -> println("T2: The number to append is: ${pair.first}") }
     }
 
     private fun computeMD5Hash(input: String): String {

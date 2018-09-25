@@ -1,7 +1,7 @@
 package de.dikodam.adventofkotlin
 
 fun main(args: Array<String>) {
-    Day05().doTheMagic()
+    Day05().runTasks()
 }
 
 class Day05 : AbstractDay() {
