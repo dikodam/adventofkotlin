@@ -28,7 +28,7 @@ class Day10 : AbstractDay() {
     }
 
     override fun task2() {
-        val lengths = input[0].parseToKnotHashLengths()
+        val lengths = input[0].parseToKnotHashParameters()
 
         val finalHash = defaultInitHash().fullHash(lengths)
 
@@ -65,19 +65,19 @@ class KnotHash(val numberSequence: List<Int>, private val currentPosition: Int, 
             skipSize = skipSize + 1)
     }
 
-    fun performOneHashingRound(lengths: List<Int>): KnotHash =
-        lengths.fold(this, KnotHash::performHashingStep)
+    fun performOneHashingRound(parameters: List<Int>): KnotHash =
+        parameters.fold(this, KnotHash::performHashingStep)
 
-    private fun perform64HashingRounds(lengths: List<Int>): KnotHash {
+    private fun perform64HashingRounds(parameters: List<Int>): KnotHash {
         var roundHash = this
         repeat(64) {
-            roundHash = roundHash.performOneHashingRound(lengths)
+            roundHash = roundHash.performOneHashingRound(parameters)
         }
         return roundHash
     }
 
-    fun fullHash(lengths: List<Int>): String {
-        val sparseHash = perform64HashingRounds(lengths).numberSequence
+    fun fullHash(parameters: List<Int>): String {
+        val sparseHash = perform64HashingRounds(parameters).numberSequence
         val denseHash = sparseHash.asSequence()
             .chunked(16)
             .map { listOf16Ints -> listOf16Ints.reduce(Int::xor) }
@@ -88,7 +88,7 @@ class KnotHash(val numberSequence: List<Int>, private val currentPosition: Int, 
     }
 }
 
-fun String.parseToKnotHashLengths(): List<Int> {
+fun String.parseToKnotHashParameters(): List<Int> {
     val input = this.chars()
     val suffix = IntStream.of(17, 31, 73, 47, 23)
     return IntStream.concat(input, suffix).toList()

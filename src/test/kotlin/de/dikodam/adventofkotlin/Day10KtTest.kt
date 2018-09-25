@@ -10,7 +10,7 @@ internal class Day10Test {
 
     @Test
     fun parseToKnotHashLengths() {
-        val result = "1,2,3".parseToKnotHashLengths()
+        val result = "1,2,3".parseToKnotHashParameters()
         assertThat(result, `is`(listOf(49, 44, 50, 44, 51, 17, 31, 73, 47, 23)))
     }
 
