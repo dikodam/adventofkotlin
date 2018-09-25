@@ -19,8 +19,7 @@ class Day14 : AbstractDay() {
     private fun buildSquare(): List<List<Char>> {
         val inputString = input[0]
         val rowKeys = (0..127).map { suffix -> "$inputString-$suffix" }
-        val square = rowKeys.toCharSquare()
-        return square
+        return rowKeys.toCharSquare()
     }
 
     private fun List<String>.toCharSquare(): List<List<Char>> {
