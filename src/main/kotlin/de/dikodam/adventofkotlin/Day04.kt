@@ -4,7 +4,7 @@ import java.security.MessageDigest
 import java.util.stream.IntStream
 
 fun main(args: Array<String>) {
-    Day04().doTheMagic()
+    Day04().runTasks()
 }
 
 class Day04 : AbstractDay() {

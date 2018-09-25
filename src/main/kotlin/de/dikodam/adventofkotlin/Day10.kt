@@ -1,5 +1,6 @@
 package de.dikodam.adventofkotlin
 
+import de.dikodam.adventofkotlin.KnotHash.Companion.defaultInitHash
 import java.util.stream.IntStream
 import kotlin.streams.toList
 
@@ -14,12 +15,8 @@ class Day10 : AbstractDay() {
             .split(",")
             .map(String::toInt)
 
-        val initHash = KnotHash(
-            numberSequence = (0..255).toList(),
-            currentPosition = 0,
-            skipSize = 0)
 
-        val finalHash = lengths.fold(initHash, KnotHash::hash)
+        val finalHash = defaultInitHash().performOneHashingRound(lengths)
 
         val productOfFirstTwoNumbers = finalHash
             .numberSequence
@@ -31,44 +28,26 @@ class Day10 : AbstractDay() {
     }
 
     override fun task2() {
-        val inputLengthsStream = input[0].chars()
-        val suffixLengthsStream = IntStream.of(17, 31, 73, 47, 23)
+        val lengths = input[0].parseToKnotHashLengths()
 
-        val lengths = IntStream.concat(inputLengthsStream, suffixLengthsStream).toList()
+        val finalHash = defaultInitHash().fullHash(lengths)
 
-        var roundInitHash = KnotHash(
-            numberSequence = (0..255).toList(),
-            currentPosition = 0,
-            skipSize = 0)
-
-        repeat(64) {
-            roundInitHash = performHashingRound(roundInitHash, lengths)
-        }
-
-        val sparseHash = roundInitHash.numberSequence
-        val denseHash = sparseHash.asSequence()
-            .chunked(16)
-            .map { listOf16Ints -> listOf16Ints.reduce(Int::xor) }
-            .map(Integer::toHexString)
-            .map { it.leftPadZero() }
-            .joinToString(separator = "")
-
-        println("Task 2: dense hash is $denseHash")
-
-    }
-
-    private fun String.leftPadZero(): String {
-        return if (this.length < 2) {
-            "0$this"
-        } else {
-            this
-        }
+        println("Task 2: dense hash is $finalHash")
     }
 }
 
 class KnotHash(val numberSequence: List<Int>, private val currentPosition: Int, private val skipSize: Int) {
 
-    fun hash(length: Int): KnotHash {
+    companion object {
+        fun defaultInitHash(): KnotHash {
+            return KnotHash(
+                numberSequence = (0..255).toList(),
+                currentPosition = 0,
+                skipSize = 0)
+        }
+    }
+
+    private fun performHashingStep(length: Int): KnotHash {
         val indicesToBeReversed = IntRange(start = currentPosition, endInclusive = currentPosition + length - 1)
             .map { it % numberSequence.size }
 
@@ -85,7 +64,40 @@ class KnotHash(val numberSequence: List<Int>, private val currentPosition: Int, 
             currentPosition = (currentPosition + skipSize + length) % numberSequence.size,
             skipSize = skipSize + 1)
     }
+
+    fun performOneHashingRound(lengths: List<Int>): KnotHash =
+        lengths.fold(this, KnotHash::performHashingStep)
+
+    private fun perform64HashingRounds(lengths: List<Int>): KnotHash {
+        var roundHash = this
+        repeat(64) {
+            roundHash = roundHash.performOneHashingRound(lengths)
+        }
+        return roundHash
+    }
+
+    fun fullHash(lengths: List<Int>): String {
+        val sparseHash = perform64HashingRounds(lengths).numberSequence
+        val denseHash = sparseHash.asSequence()
+            .chunked(16)
+            .map { listOf16Ints -> listOf16Ints.reduce(Int::xor) }
+        return denseHash
+            .map(Integer::toHexString)
+            .map { it.leftPadZero() }
+            .joinToString(separator = "")
+    }
 }
 
-fun performHashingRound(initHash: KnotHash, lengths: List<Int>) =
-    lengths.fold(initHash, KnotHash::hash)
+fun String.parseToKnotHashLengths(): List<Int> {
+    val input = this.chars()
+    val suffix = IntStream.of(17, 31, 73, 47, 23)
+    return IntStream.concat(input, suffix).toList()
+}
+
+fun String.leftPadZero(): String {
+    return if (this.length < 2) {
+        "0$this"
+    } else {
+        this
+    }
+}
